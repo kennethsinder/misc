@@ -2,7 +2,7 @@
 ###########################
 # Programmed by: Kenneth Sinder
 # Date created: 2017-05-10
-# Filename: binstrings.py
+# Filename: binstrings_redacted.py
 # Description: Binary string stuff
 ###########################
 
