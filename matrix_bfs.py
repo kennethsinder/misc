@@ -16,7 +16,9 @@ def in_range(M, i, j):
     >>> in_range([[1, 2], [3, 4]], 1, 0)
     True
     """
-    return i >= 0 and j >= 0 and i < len(M) and j < len(M)
+    if not M:
+        return False
+    return i >= 0 and j >= 0 and i < len(M) and j < len(M[0])
 
 def colours(M):
     """
@@ -52,7 +54,8 @@ def colours(M):
         next = None     # A None value for next represents no more colour groups to explore
         while not q.empty():
             current = q.get()   # Possible neighbours are below, above, left, or right
-            neighbours = [(current[0],current[1]-1), (current[0]-1,current[1]), (current[0],current[1]+1), (current[0]+1,current[1])]
+            neighbours = [(current[0], current[1]-1), (current[0]-1, current[1]),
+                          (current[0], current[1]+1), (current[0]+1, current[1])]
             for n in neighbours:    # Check if there are any new colours left in the matrix
                 if in_range(M, n[0], n[1]) and M[n[0]][n[1]] != current_colour and not n in visited:
                     next = n
