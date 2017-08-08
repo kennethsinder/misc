@@ -2,7 +2,7 @@
 ###########################
 # Programmed by: Kenneth Sinder
 # Date created: 2017-05-10
-# Filename: binstrings_redacted.py
+# Filename: binstrings.py
 # Description: Binary string stuff
 ###########################
 
@@ -10,12 +10,16 @@ def opposite(x: str) -> str:
     return '1' if x == '0' else '0'
 
 def function(x: str, n: int) -> str:
-    # REDACTED until 2017-05-17
-    return x
+    if (len(x) == 0):
+        return x
+    return x + (opposite(x[-1]) * (n + 1 - len(x)))
 
 def inverse(x: str, n: int) -> str:
-    # REDACTED until 2017-05-17
-    return x
+    xcpy = x[:]
+    last = xcpy[-1]
+    while len(xcpy) > 0 and xcpy[-1] == last:
+        xcpy = xcpy[:-1]
+    return xcpy
 
 def generate_up_to(n: int) -> list:
     if n == 0:
