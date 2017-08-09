@@ -40,25 +40,25 @@ def colours(M):
     if M == []:
         return result
 
-    next = (0, 0)   # Maintain the (i, j) position of the next new undiscovered colour
-    visited = set([next])   # Maintain a set of visited matrix positions for BFS
+    next_colour = (0, 0)   # Maintain the (i, j) position of the next new undiscovered colour
+    visited = set([next_colour])   # Maintain a set of visited matrix positions for BFS
     while 1:
-        current_colour = M[next[0]][next[1]]    # Determine the current colour being explored
+        current_colour = M[next_colour[0]][next_colour[1]]    # Determine the current colour being explored
         if current_colour in result:
             result[current_colour] += 1     # Increment the number of groups of that colour
         else:
             result[current_colour] = 1
         q = Queue()     # Queue of neighbour positions for BFS
-        q.put(next)
-        visited.add(next)
-        next = None     # A None value for next represents no more colour groups to explore
+        q.put(next_colour)
+        visited.add(next_colour)
+        next_colour = None     # A None value for next_colour represents no more colour groups to explore
         while not q.empty():
             current = q.get()   # Possible neighbours are below, above, left, or right
             neighbours = [(current[0], current[1]-1), (current[0]-1, current[1]),
                           (current[0], current[1]+1), (current[0]+1, current[1])]
             for n in neighbours:    # Check if there are any new colours left in the matrix
                 if in_range(M, n[0], n[1]) and M[n[0]][n[1]] != current_colour and not n in visited:
-                    next = n
+                    next_colour = n
                     break
             # Only look at neighbours of the same colour
             neighbours = [n for n in neighbours if in_range(M, n[0], n[1]) and M[n[0]][n[1]] == current_colour]
@@ -66,7 +66,7 @@ def colours(M):
                 if not n in visited:
                     visited.add(n)      # BFS algorithm - add (i, j) position to queue and visited set
                     q.put(n)
-        if next is None:    # If no new colours were found, the matrix is fully explored
+        if next_colour is None:    # If no new colours were found, the matrix is fully explored
             break
 
     return result
