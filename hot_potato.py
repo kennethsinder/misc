@@ -50,9 +50,9 @@ def get_performance(ticker_symbol):
 
 def format_performance(ticker_symbol, performance, name=None):
     if name is None:
-        message = '{0} performance over the last year: {1}%'
+        message = '{} performance over the last year: {:0.2f}%'
         return message.format(ticker_symbol, performance)
-    message = '{0} ({1}) performance over the last year: {2}%'
+    message = '{} ({}) performance over the last year: {:0.2f}%'
     return message.format(name, ticker_symbol, performance)
 
 def perform_tour():
@@ -67,7 +67,7 @@ def perform_tour():
         print(format_performance(ticker_symbol, performance, ticker_name))
         ticker_performance.append((ticker_symbol, ticker_name, performance))
     max_performance = max(ticker_performance, key=lambda t: t[2])
-    print('Choose: {0} ({1}), with annual {2}%'.format(max_performance[1], \
+    print('Choose: {} ({}), with annual {:0.2f}%'.format(max_performance[1], \
         max_performance[0], max_performance[2]))
 
 if __name__ == "__main__":
