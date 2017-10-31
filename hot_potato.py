@@ -28,8 +28,10 @@ def get_stock_data(ticker_symbol):
     timeseries_key = "Time Series (Daily)"
     return response.json()[timeseries_key]
 
-def current_date():
-    return (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
+def one_day_ago(dt=None, n=1):
+    if dt is None:
+        dt = datetime.today()
+    return dt - timedelta(days=n)
 
 def one_year_ago_date():
     result = datetime.today()
@@ -37,15 +39,37 @@ def one_year_ago_date():
         result = result.replace(year=result.year-1)
     except ValueError:
         result = result + (date(result.year - 1, 1, 1) - date(result.year, 1, 1))
-    return result.strftime('%Y-%m-%d')
+    return result
+
+def date_to_string(dt):
+    return dt.strftime('%Y-%m-%d')
+
+def timeseries_lookup(timeseries, dt):
+    if dt in timeseries:
+        return timeseries[date_to_string(dt)]
+
+    # Retry logic
+    while not date_to_string(dt) in timeseries and \
+            datetime.today().year - dt.year <= 2:
+        dt = one_day_ago(dt)
+    if date_to_string(dt) in timeseries:
+        return timeseries[date_to_string(dt)]
+
+    print("FATAL ERROR: No timeseries data for one year ago.")
+    quit()
 
 def extract_adjusted_close(day_summary):
     return float(day_summary['5. adjusted close'])
 
 def get_performance(ticker_symbol):
     timeseries = get_stock_data(ticker_symbol)
-    old_adjusted_close = extract_adjusted_close(timeseries[one_year_ago_date()])
-    new_adjusted_close = extract_adjusted_close(timeseries[current_date()])
+
+    old_ts_entry = timeseries_lookup(timeseries, one_year_ago_date())
+    new_ts_entry = timeseries_lookup(timeseries, one_day_ago())
+
+    old_adjusted_close = extract_adjusted_close(old_ts_entry)
+    new_adjusted_close = extract_adjusted_close(new_ts_entry)
+
     return 100 * ((new_adjusted_close / old_adjusted_close) - 1)
 
 def format_performance(ticker_symbol, performance, name=None):
