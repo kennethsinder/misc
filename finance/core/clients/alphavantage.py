@@ -7,13 +7,15 @@
 
 import requests
 
+from core.config.base import get_value as config_value
+
 
 class AlphaVantage(object):
     """
     Alpha Vantage stock data client.
     """
 
-    API_KEY = "AST2ZP8MLEK9TJZS"    # Alpha Vantage stocks API
+    API_KEY = config_value('ALPHA_VANTAGE_API_KEY')
 
     URL = "https://www.alphavantage.co/query?function=" + \
         "TIME_SERIES_DAILY_ADJUSTED&symbol={0}&outputsize=full&apikey={1}"
@@ -23,5 +25,4 @@ class AlphaVantage(object):
         Returns stock data for the given ticker symbol.
         """
         response = requests.get(self.URL.format(ticker_symbol, self.API_KEY))
-        timeseries_key = "Time Series (Daily)"
-        return response.json()[timeseries_key]
+        return response.json()[config_value('ALPHA_VANTAGE_TIMESERIES_KEY')]
