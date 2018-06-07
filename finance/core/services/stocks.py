@@ -25,6 +25,12 @@ class StocksService(object):
         return dt.strftime('%Y-%m-%d')
 
     def timeseries_lookup(self, timeseries, dt):
+        """
+        Return the day summary for day `dt` in the stock data from
+        the given `timeseries`. Includes retry logic for the closest
+        day within the past 2 years. Raises `Exception` if no data could
+        be found with these parameters.
+        """
         if dt in timeseries:
             return timeseries[self.date_to_string(dt)]
 
@@ -35,8 +41,7 @@ class StocksService(object):
         if self.date_to_string(dt) in timeseries:
             return timeseries[self.date_to_string(dt)]
 
-        print("FATAL ERROR: No timeseries data for one year ago.")
-        quit()
+        raise Exception('Error: No timeseries data for {}.'.format(dt))
 
     def extract_adjusted_close(self, day_summary):
         return float(day_summary['5. adjusted close'])

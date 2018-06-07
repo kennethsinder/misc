@@ -6,6 +6,7 @@ _loaded = False
 
 
 def _load():
+    # Copy .env.example to .env and replace with real values
     global _values, _loaded
     config_filepath = os.path.join(os.path.dirname(__file__), 'env.json')
     with open(config_filepath) as config_file:

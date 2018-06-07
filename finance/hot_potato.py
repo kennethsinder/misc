@@ -21,10 +21,15 @@ service = StocksService()
 
 
 def format_performance(ticker_symbol, performance, name=None):
+    """ (str, float, [str]) -> str
+    Given a stock `ticker_symbol` and its `performance` percentage
+    and optionally, its `name`, returns a human-readable string containing
+    that information.
+    """
     if name is None:
-        message = '{} performance over the last year: {:0.2f}%'
+        message = '{} performance over the last year: {:.2f}%'
         return message.format(ticker_symbol, performance)
-    message = '{} ({}) performance over the last year: {:0.2f}%'
+    message = '{} ({}) performance over the last year: {:.2f}%'
     return message.format(name, ticker_symbol, performance)
 
 
