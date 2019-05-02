@@ -32,8 +32,8 @@ class LRUCache(object):
 
         if len(self.map) > 1 and self.head.key != new_head.key:
             old_head = self.head
-            if old_head.next == new_head:
-                old_head.next = old_head.next.next
+            # if old_head.next == new_head:
+            #     old_head.next = old_head.next.next
             self._remove(new_head)
             old_head.prev = new_head
             self.head = new_head
@@ -45,9 +45,9 @@ class LRUCache(object):
         ptr = self.head
         while ptr != node and ptr:
             ptr = ptr.next
-        if ptr and ptr.prev:
+        if ptr.prev:
             ptr.prev.next = ptr.next
-        if ptr and ptr.next:
+        if ptr.next:
             ptr.next.prev = ptr.prev
         if ptr == self.head:
             # Removed first node
