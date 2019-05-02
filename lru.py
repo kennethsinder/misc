@@ -1,6 +1,11 @@
 #/usr/bin/env python
 
 class LRUCache(object):
+    """
+    We maintain the pre-conditions and post-conditions throughout that,
+    len(self.map) == the length of the doubly-linked list referred to
+    with the self.head -> self.tail pointers.
+    """
 
     def __init__(self, N):
         self.N = N
@@ -14,6 +19,8 @@ class LRUCache(object):
             return
 
         if len(self.map) >= self.N:
+            # Evict least recently used node, which
+            # is at the tail of the doubly-linked list.
             tail = self._remove(self.tail)
             del self.map[tail.key]
 
@@ -31,9 +38,9 @@ class LRUCache(object):
         result = new_head.value
 
         if len(self.map) > 1 and self.head.key != new_head.key:
+            # Need to move accessed node up to the front,
+            # since it was the most recently used.
             old_head = self.head
-            # if old_head.next == new_head:
-            #     old_head.next = old_head.next.next
             self._remove(new_head)
             old_head.prev = new_head
             self.head = new_head
@@ -59,11 +66,11 @@ class LRUCache(object):
 
 class Node(object):
 
-    def __init__(self, key, value, prev=None, next=None):
+    def __init__(self, key, value, prev_node=None, next_node=None):
         self.key = key
         self.value = value
-        self.prev = prev
-        self.next = next
+        self.prev = prev_node
+        self.next = next_node
 
 if __name__ == '__main__':
     pass
