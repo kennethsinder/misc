@@ -1,4 +1,4 @@
-requests==2.11.1
+requests==2.20.0
 pylint==1.7.4
 pyparsing==2.0.3
 pycurl==7.43.0
