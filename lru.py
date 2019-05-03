@@ -49,17 +49,14 @@ class LRUCache(object):
         return result
 
     def _remove(self, node):
-        ptr = self.head
-        while ptr != node and ptr:
-            ptr = ptr.next
-        if ptr.prev:
-            ptr.prev.next = ptr.next
-        if ptr.next:
-            ptr.next.prev = ptr.prev
-        if ptr == self.head:
+        if node.prev:
+            node.prev.next = node.next
+        if node.next:
+            node.next.prev = node.prev
+        if node == self.head:
             # Removed first node
             self.head = self.head.next
-        if ptr == self.tail:
+        if node == self.tail:
             # Removed last node
             self.tail = self.tail.prev
         return node
