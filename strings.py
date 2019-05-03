@@ -20,13 +20,25 @@ def str_to_int(string):
         return -result
     return result
 
-def main():
-    strings = ['444', '-227', '0', '-0', '+0', '123', '321', '-5']
-    for string in strings:
-        if str_to_int(string) != int(string):
-            print("ERROR: {0} (actual) != {1} (expected)".format(str_to_int(string), int(string)))
+def is_anagram(str1, str2):
+    if len(str1) != len(str2):
+        return False
+    if str1 == str2:
+        return True
+    dict1, dict2 = {}, {}
+    for character in str1:
+        if character in dict1:
+            dict1[character] += 1
         else:
-            print("SUCCESS: {0}".format(string))
+            dict1[character] = 1
+    for character in str2:
+        if character in dict2:
+            dict2[character] += 1
+        else:
+            dict2[character] = 1
+    return dict1 == dict2
+
 
 if __name__ == '__main__':
-    main()
+    import doctest
+    doctest.testmod()
