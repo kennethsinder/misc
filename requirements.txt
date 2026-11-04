@@ -1,5 +1,5 @@
 requests==2.33.0
-pylint==1.7.4
+pylint==4.0.9
 pyparsing==2.0.3
 pycurl==7.43.0
 python-dateutil==2.4.2
